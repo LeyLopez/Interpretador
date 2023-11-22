@@ -7,47 +7,84 @@ from gramar import lexer
 from instrucciones import *
 from expresiones import *
 from principal import *
+import gettext
+import os
+from tkinter import ttk
 
+
+directorio_actual = os.getcwd()
+localedir = os.path.join(directorio_actual, 'locales')
+
+gettext.bindtextdomain('myapp', localedir)
+gettext.textdomain('myapp')
 
 
 class InterpreterApp:
     def __init__(self, master):
+        
         self.master = master
-        master.title("Interpretador")
-        master.geometry("500x600")
+        
+        self.crear_interfaz()
 
+    def crear_interfaz(self, idioma = 'es'):
+        
+        translations = gettext.translation('mensajes', localedir, languages=[idioma])
+        translations.install()
+        _ = translations.gettext
+        
+        
+        self.master.title(_("Interpretador"))
+        self.master.geometry("500x600")
+        
+        
         # Entry para ingresar código
-        self.input_code = Text(master, width=57, height=20)
+        self.input_code = Text(self.master, width=57, height=20)
         self.input_code.place(x=20, y=50)
         
         
         # Widget de texto para mostrar resultados
-        self.result_text = Text(master, width=57, height=10, state='disabled')
+        self.result_text = Text(self.master, width=57, height=10, state='disabled')
         self.result_text.place(x=20, y=300)
         
         
         # Menú para seleccionar idiomas
-        languages = ['Español', 'Inglés', 'Francés']
+        # Menú para seleccionar idiomas usando Combobox
+        languages = [_('Español'), _('Inglés'), _('Francés')]
         self.selected_language = StringVar(self.master)
-        self.selected_language.set(languages[1])  # Establecer el idioma predeterminado
-
-        language_menu = OptionMenu(self.master, self.selected_language, *languages)
-        language_menu.place(x=400, y=10)
+        self.language_combobox = ttk.Combobox(self.master, textvariable=self.selected_language, values=languages)
+        self.language_combobox.place(x=300, y=10)
+        self.language_combobox.bind("<<ComboboxSelected>>", lambda event: self.cambiar_idioma())
         
 
-        self.button_open_file = Button(master, text='Abrir archivo', bd=5, command=self.abrir_archivo)
+        self.button_open_file = Button(self.master, text=_('Abrir archivo'), bd=5, command=self.abrir_archivo)
         self.button_open_file.place(x=10, y=10)
         
         
         
-        self.button_lex = Button(self.master, text='Validar léxico', bd=5, command=self.validar_lexico)
+        self.button_lex = Button(self.master, text=_('Validar léxico'), bd=5, command=self.validar_lexico)
         self.button_lex.place(x=30, y=500)
         
-        self.button_gramar = Button(self.master, text='Validar gramática', bd=5, command=self.validar_gramatica)
+        self.button_gramar = Button(self.master, text=_('Validar gramática'), bd=5, command=self.validar_gramatica)
         self.button_gramar.place(x=130, y=500)
 
-        self.button_execute = Button(self.master, text='Ejecutar', bd=5, command=self.ejecutar_codigo)
+        self.button_execute = Button(self.master, text=_('Ejecutar'), bd=5, command=self.ejecutar_codigo)
         self.button_execute.place(x=250, y=500)
+        
+        
+    def cambiar_idioma(self, event=None):
+        selected_language = self.selected_language.get()
+        if selected_language == 'Español':
+            locale = 'es'
+        elif selected_language == 'Inglés':
+            locale = 'en'
+        elif selected_language == 'Francés':
+            locale = 'fr'
+        else:
+            locale = 'es'
+        gettext.install('mensajes', localedir, names=("ngettext",))
+        gettext.translation('mensajes', localedir, languages=[locale]).install()
+        self.crear_interfaz(locale)
+        
         
         
         
