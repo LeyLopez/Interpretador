@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
-import ply.lex as lex
-import ply.yacc as yacc
 import ts as TS
 import gramar as g
 from gramar import lexer
@@ -10,10 +8,12 @@ from instrucciones import *
 from expresiones import *
 from principal import *
 
+
+
 class InterpreterApp:
     def __init__(self, master):
         self.master = master
-        master.title("Intérpretador")
+        master.title("Interpretador")
         master.geometry("500x600")
 
         # Entry para ingresar código
@@ -27,23 +27,23 @@ class InterpreterApp:
         
         
         # Menú para seleccionar idiomas
-        languages = ['Español', 'Inglés', 'Portugués']
+        languages = ['Español', 'Inglés', 'Francés']
         self.selected_language = StringVar(self.master)
-        self.selected_language.set(languages[0])  # Establecer el idioma predeterminado
+        self.selected_language.set(languages[1])  # Establecer el idioma predeterminado
 
         language_menu = OptionMenu(self.master, self.selected_language, *languages)
         language_menu.place(x=400, y=10)
         
 
-        self.button_open_file = Button(master, text='Abrir Archivo', bd=5, command=self.abrir_archivo)
-        self.button_open_file.place(x=330, y=500)
+        self.button_open_file = Button(master, text='Abrir archivo', bd=5, command=self.abrir_archivo)
+        self.button_open_file.place(x=10, y=10)
         
         
         
         self.button_lex = Button(self.master, text='Validar léxico', bd=5, command=self.validar_lexico)
         self.button_lex.place(x=30, y=500)
         
-        self.button_gramar = Button(self.master, text='Validar gramatica', bd=5, command=self.validar_gramatica)
+        self.button_gramar = Button(self.master, text='Validar gramática', bd=5, command=self.validar_gramatica)
         self.button_gramar.place(x=130, y=500)
 
         self.button_execute = Button(self.master, text='Ejecutar', bd=5, command=self.ejecutar_codigo)
@@ -75,7 +75,7 @@ class InterpreterApp:
         self.result_text.config(state='normal')
         self.result_text.delete(1.0, END)
 
-        # Utilizar la instancia de lexer de la clase
+        # Utilizar la instancia de lexer de la gramatica
         g.lexer.input(codigo)
         tokens = []
         while True:
@@ -86,7 +86,7 @@ class InterpreterApp:
             print(tok)
 
         # Mostrar los tokens en el widget de resultados
-        self.mostrar_resultado("Tokens:", tokens)
+        self.mostrar_resultado("Tokens", tokens)
 
 
     def validar_gramatica(self):
@@ -96,10 +96,10 @@ class InterpreterApp:
         self.result_text.delete(1.0, END)
         try:
             instrucciones = g.parse(codigo)
-            self.mostrar_resultado("Análisis gramatical exitoso.")
+            self.mostrar_resultado("Análisis gramatical exitoso")
             self.mostrar_resultado(str(instrucciones))
         except Exception as e:
-            self.mostrar_resultado(f"Error en el análisis gramatical: {str(e)}")
+            self.mostrar_resultado(f"Error en el análisis gramatical {str(e)}")
 
 
 
@@ -117,7 +117,7 @@ class InterpreterApp:
         
         try:
             procesar_instrucciones(instrucciones, ts_global, self)
-            self.mostrar_resultado("Ejecución exitosa.")
+            self.mostrar_resultado("Ejecución exitosa")
             self.mostrar_resultado(str(ts_global))
         except Exception as e:
             self.mostrar_resultado(f"Error en la ejecución: {str(e)}")
@@ -125,6 +125,12 @@ class InterpreterApp:
     def mostrar_resultado(self, resultado, tokens=None):
         self.result_text.config(state='normal')
         self.result_text.insert(tk.END, resultado + "\n")
+        
+        if tokens is not None:
+        # Convertir la lista de tokens a una cadena antes de insertarla
+            tokens_str = "\n".join([str(tok) for tok in tokens])
+            self.result_text.insert(tk.END, tokens_str + "\n")
+        
         self.result_text.config(state='disabled')
 
    

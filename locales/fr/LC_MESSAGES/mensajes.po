@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Interpretador"
+msgstr "Interprète"
+
+msgid "Abrir archivo"
+msgstr "Ouvrir un fichier"
+
+msgid "Validar léxico"
+msgstr "Valider le lexique"
+
+msgid "Validar gramática"
+msgstr "Valider les graphismes"
+
+msgid "Ejecutar"
+msgstr "Courir"
+
+msgid "Ejecución exitosa"
+msgstr "Une mise en œuvre réussie"
+
+msgid "Análisis gramatical exitoso"
+msgstr "Une analyse grammaticale réussie"
+
+
+msgid "Inglés"
+msgstr "Anglais"
+
+msgid "Francés"
+msgstr "Français"
+
+msgid "Español"
+msgstr "Espagnol"
+
+msgid "Error en el análisis gramatical"
+msgstr "Erreur d'analyse grammaticale"
+
+msgid "Error en la ejecución"
+msgstr "Erreur d'exécution"
