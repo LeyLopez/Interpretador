@@ -34,13 +34,13 @@ def procesar_asignacion(instr, ts):
 
 
 def procesar_durante(instr, ts, app):
-    while resolver_expreision_logica(instr.expLogica, ts):
+    while resolver_expresion_logica(instr.expLogica, ts):
         ts_local = TS.TablaDeSimbolos(ts.simbolos)
         procesar_instrucciones(instr.instrucciones, ts_local, app)
 
 
 def procesar_condicion(instr, ts, app):
-    val = resolver_expreision_logica(instr.expLogica, ts)
+    val = resolver_expresion_logica(instr.expLogica, ts)
     if val:
         ts_local = TS.TablaDeSimbolos(ts.simbolos)
         procesar_instrucciones(instr.instrucciones, ts_local, app)
@@ -49,7 +49,7 @@ def procesar_condicion(instr, ts, app):
 
 
 def procesar_alternativa(instr, ts, app):
-    val = resolver_expreision_logica(instr.expLogica, ts)
+    val = resolver_expresion_logica(instr.expLogica, ts)
     if val:
         ts_local = TS.TablaDeSimbolos(ts.simbolos)
         procesar_instrucciones(instr.instrIfVerdadero, ts_local, app)
@@ -100,7 +100,7 @@ def resolver_cadena(expCad, ts):
         return ""
 
 
-def resolver_expreision_logica(expLog, ts):
+def resolver_expresion_logica(expLog, ts):
     exp1 = resolver_expresion_aritmetica(expLog.exp1, ts)
     exp2 = resolver_expresion_aritmetica(expLog.exp2, ts)
     if expLog.operador == OPERACION_LOGICA.MAYOR_QUE:

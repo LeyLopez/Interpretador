@@ -10,6 +10,8 @@ from principal import *
 import gettext
 import os
 from tkinter import ttk
+import ply.lex
+import ply.yacc
 
 
 directorio_actual = os.getcwd()
