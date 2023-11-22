@@ -100,7 +100,7 @@ class Alternativa(Instruccion):
 
 class RealizarDurante(Instruccion):
     """
-    Esta clase representa la instrucción do-while (acto mentre).
+    Esta clase representa la instrucción do-while (realizar durante).
 
     Parámetros:
         - instrucciones: Lista de instrucciones a ejecutar al menos una vez y luego repetir mientras la expresión lógica sea verdadera.

@@ -107,6 +107,11 @@ def t_error(t):
     t.lexer.skip(1)
 
 
+def t_eof(t):
+    r'\0+'
+    t.lexer.skip(1)
+
+
 import ply.lex as lex
 
 lexer = lex.lex()
