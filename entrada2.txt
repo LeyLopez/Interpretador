@@ -1,0 +1,26 @@
+// Declaración de variables
+numero resultado;
+numero contador;
+
+// Inicialización de variables
+resultado = 0;
+contador = 1;
+
+// Bucle para sumar los números del 1 al 10
+durante(contador <= 10) {
+    // Condición para sumar solo los números pares
+    condicion(contador % 2 == 0) {
+        resultado = resultado + contador;
+    }
+    
+    // Incrementar el contador
+    contador = contador + 1;
+}
+
+// Procedimiento para exhibir un mensaje
+procedimiento mostrarMensaje(mensaje) {
+    exhibir("Mensaje: " & mensaje);
+}
+
+// Llamada al procedimiento
+mostrarMensaje("La suma de los números pares del 1 al 10 es: " & resultado);
